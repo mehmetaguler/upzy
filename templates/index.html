@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>magonair ✈️</title>
+  <link rel="stylesheet" href="/static/base.css" />
+  <link rel="stylesheet" href="/static/style-index.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+
+  <div class="container">
+    <div class="language-toggle">
+      <button onclick="setLanguage('tr')">🇹🇷 TR</button>
+      <button onclick="setLanguage('en')">🇬🇧 EN</button>
+    </div>
+    <h1 class="syntax-keyword">
+      <span class="typing-text">magonair()</span><span class="blinking-cursor">|</span>
+    </h1>
+
+    <p class="syntax-line" data-lang="tr">// MAG'in kişisel üretim alanı</p>
+    <p class="syntax-line" data-lang="en">// Personal playground of MAG</p>
+
+    <p class="syntax-line" data-lang="tr">🚀 Üzerinde çalıştığım projeleri burada sergiliyorum.</p>
+    <p class="syntax-line" data-lang="en">🚀 I showcase my active projects here.</p>
+
+    <p class="syntax-line" data-lang="tr">🔍 Şu anda aktif olan: <a href="/upzy">Upzy</a></p>
+    <p class="syntax-line" data-lang="en">🔍 Currently live: <a href="/upzy">Upzy</a></p>
+  </div>
+
+  <script>
+    function setLanguage(lang) {
+      const toggle = document.querySelector('.language-toggle');
+      const otherLang = (lang === 'tr') ? 'en' : 'tr';
+
+      // Dil gösterimini güncelle
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = (el.getAttribute('data-lang') === lang) ? 'block' : 'none';
+      });
+
+      // Toggle butonunu güncelle
+      toggle.innerHTML = `
+        <button onclick="setLanguage('${otherLang}')">
+          ${otherLang === 'tr' ? '🇹🇷 TR' : '🇬🇧 EN'}
+        </button>
+      `;
+
+      localStorage.setItem("lang", lang);
+    }
+
+    const savedLang = localStorage.getItem("lang") || "tr";
+    setLanguage(savedLang);
+  </script>
+
+</body>
+</html>

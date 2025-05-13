@@ -1,0 +1,212 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f8f8f8;
+  margin: 0;
+  padding: 30px;
+}
+
+.container {
+  max-width: 960px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+h1 {
+  font-size: 2.2em;
+  margin-bottom: 20px;
+}
+
+.table-header {
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background: #eee;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.filter-btn.active {
+  background: #2f80ed;
+  color: #fff;
+}
+
+.filter-btn.check-now-btn {
+  background-color: #f57c00;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+.filter-btn.check-now-btn:hover {
+  background-color: #ef6c00;
+}
+
+.record-count {
+  font-size: 13px;
+  color: #666;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.datatable-wrapper {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+table th, table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Loader Animasyonu */
+.loader {
+  border: 16px solid #f3f3f3; /* Boş alanın rengi */
+  border-top: 16px solid #3498db; /* Dönme hareketindeki renk */
+  border-radius: 50%; /* Yuvarlak hale getirme */
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite; /* 2 saniyede bir döner */
+}
+
+/* Spinner döndürme animasyonu */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.ok {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.error {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.lang-switch {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
+.lang-switch button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #eee;
+  border: none;
+  cursor: pointer;
+}
+
+.footer {
+  font-size: 12px;
+  color: #999;
+  margin-top: 40px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Sayfalama kısmı */
+.dataTables_paginate {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.dataTables_paginate .paginate_button {
+  padding: 6px 12px;
+  margin: 0 2px;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.dataTables_paginate .paginate_button.current {
+  background-color: #f57c00;
+  color: white !important;
+}
+
+.dataTables_paginate .paginate_button:hover {
+  background-color: #ef6c00;
+  color: white !important;
+}
+
+/* 'Showing x to y of z entries' kısmı */
+.dataTables_info {
+  font-size: 14px;
+  margin-top: 15px;
+  color: #333;
+}
+
+.select-entries {
+  font-size: 14px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+/* Genel Stil Düzenlemeleri */
+.dataTables_length, .dataTables_filter {
+  display: inline-block;
+  margin: 10px;
+}
+
+select, input[type="search"] {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dataTables_length select {
+  width: 80px;
+}
+
+.dataTables_filter input[type="search"] {
+  width: 250px;
+}
+
+.dataTables_info {
+  font-size: 14px;
+  margin-top: 15px;
+  color: #333;
+}

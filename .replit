@@ -1,0 +1,13 @@
+run = "python3 main.py"
+
+modules = ["python-3.11"]
+
+[nix]
+
+[[ports]]
+localPort = 81
+externalPort = 80
+
+[[ports]]
+localPort = 3000
+externalPort = 3000
