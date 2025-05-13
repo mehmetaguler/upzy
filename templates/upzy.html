@@ -180,20 +180,18 @@
   </script>
 <script>
   $(document).ready(function () {
+    $('#loader').show(); // Show loader before DataTable initialization
     var table = $('table').DataTable({
       "order": [[0, "desc"]],
       "pageLength": 50,
       "language": selectedLanguage,
+      "processing": true,
       "initComplete": function(settings, json) {
         $('#loader').hide();
-      },
-      "drawCallback": function() {
-        // Other callback logic if needed
-      }loader').hide();  // Veriler yüklendikten sonra loader'ı gizle
       }
     });
   });
-  </script>
+</script>
   
 </body>
 </html>
