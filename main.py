@@ -18,18 +18,23 @@ def write_log_entry(url, status, duration):
         with open(log_file, "r") as f:
             logs = json.load(f)
     except:
-        logs = []
+        logs = {"latest": [], "all": []}
 
     now = datetime.now(istanbul).strftime("%Y-%m-%d %H:%M:%S")
-
-    logs.insert(0, {
+    new_entry = {
         "url": url,
         "status": status,
         "time": f"{duration:.2f}",
         "timestamp": now
-    })
+    }
 
-    logs = logs[:50]
+    # İlk URL kontrolünde latest listesini temizle
+    if url == urls[0]:
+        logs["latest"] = []
+    
+    # Latest ve all listelerine ekle
+    logs["latest"].append(new_entry)
+    logs["all"].insert(0, new_entry)
 
     with open(log_file, "w") as f:
         json.dump(logs, f, indent=2)
@@ -193,19 +198,22 @@ def check_now():
 @app.route("/upzy")
 def upzy():
     view = request.args.get("view", "latest")
+    lang = request.args.get("lang", "tr")
 
     try:
         with open("upzy_logs.json", "r") as f:
-            logs = json.load(f)
+            all_logs = json.load(f)
     except:
-        logs = []
+        all_logs = {"latest": [], "all": []}
 
-    if view == "errors":
-        logs = [log for log in logs if log["status"] == "DOWN"]
-    elif view == "latest":
-        logs = logs[:50]
+    if view == "latest":
+        logs = all_logs.get("latest", [])
+    elif view == "all":
+        logs = all_logs.get("all", [])
+    else:  # errors
+        logs = [log for log in all_logs.get("all", []) if log["status"] == "DOWN"]
 
-    return render_template("upzy.html", logs=logs, view=view)
+    return render_template("upzy.html", logs=logs, view=view, lang=lang)
 
 
 if __name__ == "__main__":
