@@ -1,5 +1,474 @@
-
 {
-  "latest": [],
-  "all": []
+  "latest": [
+    {
+      "url": "https://www.lcwaikiki.rs/sr-RS/RS/",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.rs/en-US/RS",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.ge/en-US/GE",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.ge/ka-GE/GE",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.de/de-DE/DE",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.de/tr-TR/DE",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.fr/fr-FR/FR",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.fr/tr-TR/FR",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.it/en-US/IT",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.bg/en-US/BG",
+      "status": "403 UP",
+      "time": "0.15",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.bg/bg-BG/BG",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.ro/ro-RO/RO",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.ro/en-US/RO",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.ru/ru-RU/RU",
+      "status": "403 UP",
+      "time": "0.29",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.ua/uk-UA/UA",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ua/ru-RU/UA",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.kz/kk-KZ/KZ",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.kz/ru-RU/KZ",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/fr-FR/MA",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/ar-MA/MA",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/en-US/MA",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.eg/ar-EG/EG",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.eg/en-US/EG",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.iq/en",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:56"
+    },
+    {
+      "url": "https://www.lcwaikiki.iq/ku",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:56"
+    },
+    {
+      "url": "https://www.yokboylesite29291.com/lcw",
+      "status": "DOWN",
+      "time": "0.00",
+      "timestamp": "2025-05-13 13:39:56"
+    }
+  ],
+  "all": [
+    {
+      "url": "https://www.yokboylesite29291.com/lcw",
+      "status": "DOWN",
+      "time": "0.00",
+      "timestamp": "2025-05-13 13:39:56"
+    },
+    {
+      "url": "https://www.lcwaikiki.iq/ku",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:56"
+    },
+    {
+      "url": "https://www.lcwaikiki.iq/en",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:56"
+    },
+    {
+      "url": "https://www.lcwaikiki.eg/en-US/EG",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.eg/ar-EG/EG",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/en-US/MA",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/ar-MA/MA",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/fr-FR/MA",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.kz/ru-RU/KZ",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.kz/kk-KZ/KZ",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ua/ru-RU/UA",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ua/uk-UA/UA",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:55"
+    },
+    {
+      "url": "https://www.lcwaikiki.ru/ru-RU/RU",
+      "status": "403 UP",
+      "time": "0.29",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.ro/en-US/RO",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.ro/ro-RO/RO",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.bg/bg-BG/BG",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.bg/en-US/BG",
+      "status": "403 UP",
+      "time": "0.15",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.it/en-US/IT",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.fr/tr-TR/FR",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.fr/fr-FR/FR",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:54"
+    },
+    {
+      "url": "https://www.lcwaikiki.de/tr-TR/DE",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.de/de-DE/DE",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.ge/ka-GE/GE",
+      "status": "403 UP",
+      "time": "0.09",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.ge/en-US/GE",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.rs/en-US/RS",
+      "status": "403 UP",
+      "time": "0.10",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.lcwaikiki.rs/sr-RS/RS/",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:53"
+    },
+    {
+      "url": "https://www.yokboylesite29291.com/lcw",
+      "status": "DOWN",
+      "time": "0.00",
+      "timestamp": "2025-05-13 13:39:47"
+    },
+    {
+      "url": "https://www.lcwaikiki.iq/ku",
+      "status": "403 UP",
+      "time": "0.14",
+      "timestamp": "2025-05-13 13:39:47"
+    },
+    {
+      "url": "https://www.lcwaikiki.iq/en",
+      "status": "403 UP",
+      "time": "0.15",
+      "timestamp": "2025-05-13 13:39:47"
+    },
+    {
+      "url": "https://www.lcwaikiki.eg/en-US/EG",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:47"
+    },
+    {
+      "url": "https://www.lcwaikiki.eg/ar-EG/EG",
+      "status": "403 UP",
+      "time": "0.14",
+      "timestamp": "2025-05-13 13:39:47"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/en-US/MA",
+      "status": "403 UP",
+      "time": "0.13",
+      "timestamp": "2025-05-13 13:39:47"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/ar-MA/MA",
+      "status": "403 UP",
+      "time": "0.14",
+      "timestamp": "2025-05-13 13:39:47"
+    },
+    {
+      "url": "https://www.lcwaikiki.ma/fr-FR/MA",
+      "status": "403 UP",
+      "time": "0.14",
+      "timestamp": "2025-05-13 13:39:46"
+    },
+    {
+      "url": "https://www.lcwaikiki.kz/ru-RU/KZ",
+      "status": "403 UP",
+      "time": "0.14",
+      "timestamp": "2025-05-13 13:39:46"
+    },
+    {
+      "url": "https://www.lcwaikiki.kz/kk-KZ/KZ",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:46"
+    },
+    {
+      "url": "https://www.lcwaikiki.ua/ru-RU/UA",
+      "status": "403 UP",
+      "time": "0.23",
+      "timestamp": "2025-05-13 13:39:46"
+    },
+    {
+      "url": "https://www.lcwaikiki.ua/uk-UA/UA",
+      "status": "403 UP",
+      "time": "0.32",
+      "timestamp": "2025-05-13 13:39:46"
+    },
+    {
+      "url": "https://www.lcwaikiki.ru/ru-RU/RU",
+      "status": "403 UP",
+      "time": "0.30",
+      "timestamp": "2025-05-13 13:39:45"
+    },
+    {
+      "url": "https://www.lcwaikiki.ro/en-US/RO",
+      "status": "403 UP",
+      "time": "0.14",
+      "timestamp": "2025-05-13 13:39:45"
+    },
+    {
+      "url": "https://www.lcwaikiki.ro/ro-RO/RO",
+      "status": "403 UP",
+      "time": "0.36",
+      "timestamp": "2025-05-13 13:39:45"
+    },
+    {
+      "url": "https://www.lcwaikiki.bg/bg-BG/BG",
+      "status": "403 UP",
+      "time": "0.11",
+      "timestamp": "2025-05-13 13:39:45"
+    },
+    {
+      "url": "https://www.lcwaikiki.bg/en-US/BG",
+      "status": "403 UP",
+      "time": "0.30",
+      "timestamp": "2025-05-13 13:39:45"
+    },
+    {
+      "url": "https://www.lcwaikiki.it/en-US/IT",
+      "status": "403 UP",
+      "time": "0.34",
+      "timestamp": "2025-05-13 13:39:44"
+    },
+    {
+      "url": "https://www.lcwaikiki.fr/tr-TR/FR",
+      "status": "403 UP",
+      "time": "0.15",
+      "timestamp": "2025-05-13 13:39:44"
+    },
+    {
+      "url": "https://www.lcwaikiki.fr/fr-FR/FR",
+      "status": "403 UP",
+      "time": "0.41",
+      "timestamp": "2025-05-13 13:39:44"
+    },
+    {
+      "url": "https://www.lcwaikiki.de/tr-TR/DE",
+      "status": "403 UP",
+      "time": "0.14",
+      "timestamp": "2025-05-13 13:39:43"
+    },
+    {
+      "url": "https://www.lcwaikiki.de/de-DE/DE",
+      "status": "403 UP",
+      "time": "0.13",
+      "timestamp": "2025-05-13 13:39:43"
+    },
+    {
+      "url": "https://www.lcwaikiki.ge/ka-GE/GE",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:43"
+    },
+    {
+      "url": "https://www.lcwaikiki.ge/en-US/GE",
+      "status": "403 UP",
+      "time": "0.12",
+      "timestamp": "2025-05-13 13:39:43"
+    },
+    {
+      "url": "https://www.lcwaikiki.rs/en-US/RS",
+      "status": "403 UP",
+      "time": "0.14",
+      "timestamp": "2025-05-13 13:39:43"
+    },
+    {
+      "url": "https://www.lcwaikiki.rs/sr-RS/RS/",
+      "status": "403 UP",
+      "time": "0.13",
+      "timestamp": "2025-05-13 13:39:43"
+    }
+  ]
 }
