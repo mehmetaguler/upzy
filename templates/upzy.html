@@ -12,7 +12,7 @@
 
     <div id="loader" class="loader" style="display: none;"></div>
 
-    
+
     <div class="lang-switch">
       <button id="switchLang">
         {% if lang == 'en' %}🇹🇷 TR{% else %}🇬🇧 EN{% endif %}
@@ -179,19 +179,21 @@
 
   </script>
 <script>
-  $(document).ready(function () {
-    $('#loader').show(); // Show loader before DataTable initialization
-    var table = $('table').DataTable({
-      "order": [[0, "desc"]],
-      "pageLength": 50,
-      "language": selectedLanguage,
-      "processing": true,
-      "initComplete": function(settings, json) {
-        $('#loader').hide();
-      }
+    $(document).ready(function () {
+      $('#loader').show();
+      var currentLang = document.documentElement.lang;
+      var selectedLanguage = languageOptions[currentLang];
+
+      var table = $('table').DataTable({
+        "order": [[0, "desc"]],
+        "pageLength": 50,
+        "language": selectedLanguage,
+        "processing": true,
+        "initComplete": function(settings, json) {
+          $('#loader').hide();
+        }
+      });
     });
-  });
-</script>
-  
+  </script>
 </body>
 </html>
