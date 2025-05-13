@@ -32,7 +32,7 @@
         <a href="/upzy?view=all&lang={{ lang }}" class="filter-btn {% if view == 'all' %}active{% endif %}" data-tr="Tüm Kayıtlar" data-en="All Records">
           {% if lang == 'en' %}All Records{% else %}Tüm Kayıtlar{% endif %}
         </a>
-        <a href="/check-now?lang={{ lang }}" class="filter-btn check-now-btn" data-tr="Şimdi Kontrol Et" data-en="Check it Now">
+        <a href="#" id="check-now" class="filter-btn check-now-btn" data-tr="Şimdi Kontrol Et" data-en="Check it Now">
           {% if lang == 'en' %}
             🔄 Check it Now
           {% else %}
@@ -185,6 +185,16 @@
         const newLang = currentLang === 'tr' ? 'en' : 'tr';
         document.documentElement.lang = newLang;
         changeLanguage(newLang);
+      });
+
+      // Check-now butonu için AJAX işlemi
+      $('#check-now').click(function(e) {
+        e.preventDefault();
+        $('#loader').show();
+        
+        $.get('/check-now?lang=' + currentLang, function() {
+          location.reload();
+        });
       });
     });
 
