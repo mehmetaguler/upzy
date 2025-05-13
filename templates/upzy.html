@@ -139,10 +139,21 @@
       }
 
       // DataTable'ı ilk başlatmada dil ayarlarını ekleyerek başlat
+      $('#loader').show();
       var table = $('table').DataTable({
         "order": [[0, "desc"]],
         "pageLength": 50,
-        "language": selectedLanguage // Dil ayarlarını burada ekledik
+        "language": selectedLanguage,
+        "processing": true,
+        "initComplete": function(settings, json) {
+          $('#loader').hide();
+        },
+        "preDrawCallback": function() {
+          $('#loader').show();
+        },
+        "drawCallback": function() {
+          $('#loader').hide();
+        }
       });
 
       // Dil değiştirme fonksiyonu
@@ -177,23 +188,6 @@
       });
     });
 
-  </script>
-<script>
-    $(document).ready(function () {
-      $('#loader').show();
-      var currentLang = document.documentElement.lang;
-      var selectedLanguage = languageOptions[currentLang];
-
-      var table = $('table').DataTable({
-        "order": [[0, "desc"]],
-        "pageLength": 50,
-        "language": selectedLanguage,
-        "processing": true,
-        "initComplete": function(settings, json) {
-          $('#loader').hide();
-        }
-      });
-    });
   </script>
 </body>
 </html>
