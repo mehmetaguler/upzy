@@ -180,16 +180,16 @@
   </script>
 <script>
   $(document).ready(function () {
-    // Veriler yüklenmeden önce loader'ı göster
-    $('#loader').show();
-
-    // DataTable verisi yüklendikten sonra loader'ı gizle
     var table = $('table').DataTable({
       "order": [[0, "desc"]],
       "pageLength": 50,
       "language": selectedLanguage,
+      "initComplete": function(settings, json) {
+        $('#loader').hide();
+      },
       "drawCallback": function() {
-        $('#loader').hide();  // Veriler yüklendikten sonra loader'ı gizle
+        // Other callback logic if needed
+      }loader').hide();  // Veriler yüklendikten sonra loader'ı gizle
       }
     });
   });
