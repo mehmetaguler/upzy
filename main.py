@@ -31,7 +31,7 @@ def write_log_entry(url, status, duration):
     # İlk URL kontrolünde latest listesini temizle
     if url == urls[0]:
         logs["latest"] = []
-    
+
     # Latest ve all listelerine ekle
     logs["latest"].append(new_entry)
     logs["all"].insert(0, new_entry)
@@ -82,7 +82,7 @@ def run_schedule():
 def send_email(subject, html_body):
     sender_email = "upzybot@gmail.com"
     receiver_email = "mehmeta.guler@gmail.com"
-    app_password = os.environ["SMTP_PSW"]
+    app_password = os.environ.get("SMTP_PSW", "yfzy lpds azab tswm")
 
     msg = MIMEText(html_body, "html")
     msg["Subject"] = subject
@@ -138,7 +138,10 @@ def check_urls():
               </body>
             </html>
             """
-            send_email("🚨 Upzy Uyarısı: Site Çöktü!", error_html)
+            try:
+                send_email("🚨 Upzy Uyarısı: Site Çöktü!", error_html)
+            except Exception as e:
+                print(f"[WARN] Mail gönderilemedi: {e}")
 
 
 # 📬 Günlük rapor (hata olmasa bile)
@@ -211,7 +214,9 @@ def upzy():
     elif view == "all":
         logs = all_logs.get("all", [])
     else:  # errors
-        logs = [log for log in all_logs.get("all", []) if log["status"] == "DOWN"]
+        logs = [
+            log for log in all_logs.get("all", []) if log["status"] == "DOWN"
+        ]
 
     return render_template("upzy.html", logs=logs, view=view, lang=lang)
 
