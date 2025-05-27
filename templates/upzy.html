@@ -1,203 +1,253 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upzy Rapor Paneli</title>
-  <link rel="stylesheet" href="/static/style-upzy.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-tr="Upzy Rapor Paneli" data-en="Upzy Report Panel">Upzy Rapor Paneli</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/static/style-upzy.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="container">
+    <div class="container">
+        <div class="lang-switch">
+            <button id="switchLang">
+                {% if lang == 'en' %}🇹🇷 TR{% else %}🇬🇧 EN{% endif %}
+            </button>
+        </div>
 
-    <div id="loader" class="loader" style="display: none;"></div>
+        <h1>🚨 <span data-tr="Upzy Rapor Paneli" data-en="Upzy Report Panel">Upzy Rapor Paneli</span></h1>
 
+        <div class="table-header">
+            <div class="filters">
+                <a href="/upzy?view=latest&lang={{ lang }}" class="filter-btn {% if view == 'latest' %}active{% endif %}" data-tr="Son Kayıtlar" data-en="Latest">
+                    {% if lang == 'en' %}Latest{% else %}Son Kayıtlar{% endif %}
+                </a>
+                <a href="/upzy?view=errors&lang={{ lang }}" class="filter-btn {% if view == 'errors' %}active{% endif %}" data-tr="Hatalılar" data-en="Errors">
+                    {% if lang == 'en' %}Errors{% else %}Hatalılar{% endif %}
+                </a>
+                <a href="/upzy?view=all&lang={{ lang }}" class="filter-btn {% if view == 'all' %}active{% endif %}" data-tr="Tüm Kayıtlar" data-en="All Records">
+                    {% if lang == 'en' %}All Records{% else %}Tüm Kayıtlar{% endif %}
+                </a>
+                <button id="check-now" class="filter-btn check-now-btn" data-tr="Şimdi Kontrol Et" data-en="Check it Now">
+                    {% if lang == 'en' %}
+                    🔄 Check it Now
+                    {% else %}
+                    🔄 Şimdi Kontrol Et
+                    {% endif %}
+                </button>
+            </div>
+        </div>
 
-    <div class="lang-switch">
-      <button id="switchLang">
-        {% if lang == 'en' %}🇹🇷 TR{% else %}🇬🇧 EN{% endif %}
-      </button>
+        <div class="record-count" data-tr="0 URL kontrol edildi" data-en="0 URLs checked">
+            0 URL kontrol edildi
+        </div>
+
+        <div class="datatable-wrapper">
+            <table id="upzyTable">
+                <thead>
+                    <tr>
+                        <th data-tr="Zaman" data-en="Timestamp">Zaman</th>
+                        <th data-tr="URL" data-en="URL">URL</th>
+                        <th data-tr="Durum" data-en="Status">Durum</th>
+                        <th data-tr="Yanıt Süresi" data-en="Response Time">Yanıt Süresi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <a href="/" class="back-link" data-tr="Anasayfa" data-en="Home">← Anasayfa</a>
+        <p class="footer">// powered by <strong>MAG</strong></p>
     </div>
 
-    <h1>🚨 <span data-tr="Upzy Rapor Paneli" data-en="Upzy Report Panel">Upzy Rapor Paneli</span></h1>
+    <script src="/static/lang.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script>
+        var table; // DataTable objesini global tanımla
 
-    <div class="table-header">
-      <div class="filters">
-        <a href="/upzy?view=latest&lang={{ lang }}" class="filter-btn {% if view == 'latest' %}active{% endif %}" data-tr="Son Kayıtlar" data-en="Latest">
-          {% if lang == 'en' %}Latest{% else %}Son Kayıtlar{% endif %}
-        </a>
-        <a href="/upzy?view=errors&lang={{ lang }}" class="filter-btn {% if view == 'errors' %}active{% endif %}" data-tr="Hatalılar" data-en="Errors">
-          {% if lang == 'en' %}Errors{% else %}Hatalılar{% endif %}
-        </a>
-        <a href="/upzy?view=all&lang={{ lang }}" class="filter-btn {% if view == 'all' %}active{% endif %}" data-tr="Tüm Kayıtlar" data-en="All Records">
-          {% if lang == 'en' %}All Records{% else %}Tüm Kayıtlar{% endif %}
-        </a>
-        <a href="#" id="check-now" class="filter-btn check-now-btn" data-tr="Şimdi Kontrol Et" data-en="Check it Now">
-          {% if lang == 'en' %}
-            🔄 Check it Now
-          {% else %}
-            🔄 Şimdi Kontrol Et
-          {% endif %}
-        </a>
-      </div>
-    </div>
+        $(document).ready(function () {
+            // Dil ayarlarını tanımla
+            var languageOptions = {
+                "tr": {
+                    "sEmptyTable": "Tabloda veri bulunmamaktadır",
+                    "sInfo": "Gösterilen _START_ ile _END_ arasındaki _TOTAL_ kayıt",
+                    "sInfoEmpty": "Gösterilecek kayıt yok",
+                    "sInfoFiltered": "(toplam _MAX_ kayıttan filtrelendi)",
+                    "sLengthMenu": "_MENU_ kayıt göster",
+                    "sLoadingRecords": "Yükleniyor...",
+                    "sProcessing": "İşleniyor...",
+                    "sSearch": "Ara:",
+                    "sZeroRecords": "Eşleşen kayıt bulunamadı",
+                    "oPaginate": {
+                        "sFirst": "İlk",
+                        "sPrevious": "Önceki",
+                        "sNext": "Sonraki",
+                        "sLast": "Son"
+                    },
+                    "sInfoPostFix": "",
+                    "sSearchPlaceholder": "Arama yapın...",
+                    "sShow": "Göster",
+                    "sShowEntries": "Kayıt Göster"
+                },
+                "en": {
+                    "sEmptyTable": "No data available in table",
+                    "sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "sInfoEmpty": "Showing 0 to 0 of 0 entries",
+                    "sInfoFiltered": "(filtered from _MAX_ total entries)",
+                    "sLengthMenu": "_MENU_ entries per page",
+                    "sLoadingRecords": "Loading...",
+                    "sProcessing": "Processing...",
+                    "sSearch": "Search:",
+                    "sZeroRecords": "No matching records found",
+                    "oPaginate": {
+                        "sFirst": "First",
+                        "sPrevious": "Previous",
+                        "sNext": "Next",
+                        "sLast": "Last"
+                    },
+                    "sInfoPostFix": "",
+                    "sSearchPlaceholder": "Search here...",
+                    "sShow": "Show",
+                    "sShowEntries": "Show Entries"
+                }
+            };
 
-    <div class="record-count" data-tr="{{ logs|length }} URL kontrol edildi" data-en="{{ logs|length }} URLs checked">
-      {{ logs|length }} URL kontrol edildi
-    </div>
+            var currentLang = document.documentElement.lang;
+            var selectedLanguage = languageOptions[currentLang];
 
-    <div class="datatable-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th data-tr="Zaman" data-en="Timestamp">Zaman</th>
-            <th data-tr="URL" data-en="URL">URL</th>
-            <th data-tr="Durum" data-en="Status">Durum</th>
-            <th data-tr="Yanıt Süresi" data-en="Response Time">Yanıt Süresi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for log in logs %}
-            <tr>
-              <td>{{ log.timestamp }}</td>
-              <td>{{ log.url }}</td>
-              <td class="{% if log.status == 'DOWN' %}error{% else %}ok{% endif %}">{{ log.status }}</td>
-              <td>{{ log.time }} sn</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+            function updateLangButtonText(lang) {
+                const langButton = document.getElementById('switchLang');
+                if (lang === 'tr') {
+                    langButton.textContent = '🇬🇧 EN';
+                } else {
+                    langButton.textContent = '🇹🇷 TR';
+                }
+                const checkNowButton = $('#check-now');
+                if (!checkNowButton.prop('disabled')) {
+                    const originalText = lang === 'en' ? '🔄 Check it Now' : '🔄 Şimdi Kontrol Et';
+                    checkNowButton.html(originalText);
+                }
+            }
 
-    <a href="/" class="back-link" data-tr="Anasayfa" data-en="Home">← Anasayfa</a>
-    <p class="footer">// powered by <strong>MAG</strong></p>
-  </div>
+            function updateRecordCount() {
+                const logsToDisplayCount = table.rows({ search: 'applied' }).data().length;
+                const recordCountElement = $('.record-count');
+                if (document.documentElement.lang === 'en') {
+                    recordCountElement.text(`${logsToDisplayCount} URLs checked`);
+                } else {
+                    recordCountElement.text(`${logsToDisplayCount} URL kontrol edildi`);
+                }
+            }
 
-  <script src="/static/lang.js"></script>
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      // Dil ayarlarını tanımla
-      var languageOptions = {
-        "tr": {
-          "sEmptyTable": "Tabloda veri bulunmamaktadır",
-          "sInfo": "Gösterilen _START_ ile _END_ arasındaki _TOTAL_ kayıt",
-          "sInfoEmpty": "Gösterilecek kayıt yok",
-          "sInfoFiltered": "(toplam _MAX_ kayıttan filtrelendi)",
-          "sLengthMenu": "_MENU_ kayıt göster",
-          "sLoadingRecords": "Yükleniyor...",
-          "sProcessing": "İşleniyor...",
-          "sSearch": "Ara:",
-          "sZeroRecords": "Eşleşen kayıt bulunamadı",
-          "oPaginate": {
-            "sFirst": "İlk",
-            "sPrevious": "Önceki",
-            "sNext": "Sonraki",
-            "sLast": "Son"
-          },
-          "sInfoPostFix": "",
-          "sSearchPlaceholder": "Arama yapın...",
-          "sShow": "Göster",
-          "sShowEntries": "Kayıt Göster"
-        },
-        "en": {
-          "sEmptyTable": "No data available in table",
-          "sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
-          "sInfoEmpty": "Showing 0 to 0 of 0 entries",
-          "sInfoFiltered": "(filtered from _MAX_ total entries)",
-          "sLengthMenu": "_MENU_ entries per page",
-          "sLoadingRecords": "Loading...",
-          "sProcessing": "Processing...",
-          "sSearch": "Search:",
-          "sZeroRecords": "No matching records found",
-          "oPaginate": {
-            "sFirst": "First",
-            "sPrevious": "Previous",
-            "sNext": "Next",
-            "sLast": "Last"
-          },
-          "sInfoPostFix": "",
-          "sSearchPlaceholder": "Search here...",
-          "sShow": "Show",
-          "sShowEntries": "Show Entries"
-        }
-      };
+            // DataTable'ı AJAX kaynağı ile başlat
+            // DataTables veriyi /api/upzy_logs endpoint'inden çekecek
+            table = $('#upzyTable').DataTable({ // 'table' objesini global olarak tanımlıyoruz
+                "order": [[0, "desc"]],
+                "pageLength": 50,
+                "language": selectedLanguage,
+                "processing": true,
+                "serverSide": false, // Veriyi doğrudan API'den çekiyoruz, server-side işlem yapmıyoruz
+                "ajax": {
+                    "url": "/api/upzy_logs", // API uç noktası
+                    "dataSrc": "", // JSON doğrudan bir dizi döndürdüğü için dataSrc boş kalır
+                    "data": function (d) { // URL parametrelerini ekleyelim
+                        const urlParams = new URLSearchParams(window.location.search);
+                        d.view = urlParams.get('view') || 'latest';
+                        d.lang = urlParams.get('lang') || 'tr';
+                    }
+                },
+                "columns": [
+                    { "data": "timestamp" },
+                    { "data": "url" },
+                    { "data": "status" },
+                    { "data": "time" }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": 2,
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            if (cellData === 'DOWN') {
+                                $(td).addClass('error');
+                            } else if (cellData && cellData.includes('UP')) {
+                                $(td).addClass('ok');
+                            }
+                        }
+                    },
+                    {
+                        "targets": 3,
+                        "render": function (data, type, row) {
+                            if (type === 'display' && data !== "N/A" && typeof data === 'string' && !data.includes('sn')) {
+                                return data + ' sn';
+                            }
+                            return data;
+                        }
+                    }
+                ],
+                "initComplete": function(settings, json) {
+                    updateRecordCount();
+                }
+            });
 
-      // Dil ayarını kontrol et ve uygun dili seç
-      var currentLang = document.documentElement.lang; // 'tr' veya 'en'
-      var selectedLanguage = languageOptions[currentLang];
+            updateLangButtonText(currentLang);
 
-      // Dil değiştirme butonundaki metni güncelle
-      function updateLangButtonText(lang) {
-        const langButton = document.getElementById('switchLang');
-        if (lang === 'tr') {
-          langButton.textContent = '🇬🇧 EN'; // Türkçe dilindeyse buton EN göster
-        } else {
-          langButton.textContent = '🇹🇷 TR'; // İngilizce dilindeyse buton TR göster
-        }
-      }
+            document.getElementById('switchLang').addEventListener('click', function() {
+                const currentLang = document.documentElement.lang;
+                const newLang = currentLang === 'tr' ? 'en' : 'tr';
+                const currentView = new URLSearchParams(window.location.search).get('view') || 'latest';
+                window.location.href = `/upzy?view=${currentView}&lang=${newLang}`; 
+            });
 
-      // DataTable'ı ilk başlatmada dil ayarlarını ekleyerek başlat
-      $('#loader').show();
-      var table = $('table').DataTable({
-        "order": [[0, "desc"]],
-        "pageLength": 50,
-        "language": selectedLanguage,
-        "processing": true,
-        "initComplete": function(settings, json) {
-          $('#loader').hide();
-        },
-        "preDrawCallback": function() {
-          $('#loader').show();
-        },
-        "drawCallback": function() {
-          $('#loader').hide();
-        }
-      });
+            $('#check-now').on('click', function(event) {
+                event.preventDefault();
 
-      // Dil değiştirme fonksiyonu
-      function changeLanguage(lang) {
-        document.querySelectorAll('[data-tr], [data-en]').forEach(function(element) {
-          const key = lang === 'en' ? 'data-en' : 'data-tr';
-          element.textContent = element.getAttribute(key);
+                const checkNowButton = $(this);
+                checkNowButton.prop('disabled', true);
+                const currentLangBtnText = document.documentElement.lang === 'en' ? '🔄 Checking...' : '🔄 Kontrol Ediliyor...';
+                checkNowButton.html(currentLangBtnText);
+                
+                const recordCountElement = $('.record-count');
+                const checkingText = document.documentElement.lang === 'en' ? "URLs are being checked..." : "URL'ler kontrol ediliyor...";
+                recordCountElement.text(checkingText); 
+
+                const currentView = new URLSearchParams(window.location.search).get('view') || 'latest';
+
+                $.ajax({
+                    url: '/trigger_check',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ view: currentView }),
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log("Sunucu yanıtı:", response);
+                        if (response && response.status === 'success' && response.data) {
+                            // Trigger_check başarılı olduğunda DataTables'ı yeniden yükle
+                            table.ajax.reload(function() {
+                                updateRecordCount(); // Yeniden yüklemeden sonra sayıyı güncelle
+                            });
+                            console.log("Tablo yeniden yüklendi!");
+
+                        } else {
+                            console.warn("Sunucudan geçerli bir yanıt gelmedi veya 'status' 'success' değil ya da 'data' alanı eksik.");
+                            alert("URL kontrolü sırasında bir sorun oluştu: " + (response.message || "Bilinmeyen Hata"));
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("URL kontrolünde AJAX hatası oluştu:", error);
+                        console.error("Durum:", status);
+                        console.error("XHR Yanıtı:", xhr.responseText);
+                        alert("URL kontrolünde bir hata oluştu. Tarayıcı konsolunu kontrol edin.");
+                    },
+                    complete: function() {
+                        const currentLangComplete = document.documentElement.lang;
+                        const originalText = currentLangComplete === 'en' ? '🔄 Check it Now' : '🔄 Şimdi Kontrol Et';
+                        checkNowButton.prop('disabled', false).html(originalText);
+                    }
+                });
+            });
         });
-
-        // DataTable dilini değiştir ve sıfırla
-        var selectedLanguage = languageOptions[lang];
-        table.destroy();  // Mevcut DataTable'ı yok et
-        table = $('table').DataTable({
-          "order": [[0, "desc"]],
-          "pageLength": 50,
-          "language": selectedLanguage // Yeni dil ayarlarıyla başlat
-        });
-
-        // Buton metnini güncelle
-        updateLangButtonText(lang);
-      }
-
-      // Sayfa yüklendiğinde buton metnini doğru olarak ayarla
-      updateLangButtonText(currentLang);
-
-      // Dil değişikliği işlemi
-      document.getElementById('switchLang').addEventListener('click', function() {
-        const currentLang = document.documentElement.lang;
-        const newLang = currentLang === 'tr' ? 'en' : 'tr';
-        document.documentElement.lang = newLang;
-        changeLanguage(newLang);
-      });
-
-      // Check-now butonu için AJAX işlemi
-      $('#check-now').click(function(e) {
-        e.preventDefault();
-        $('#loader').show();
-        
-        $.get('/check-now?lang=' + currentLang, function() {
-          location.reload();
-        });
-      });
-    });
-
-  </script>
+    </script>
 </body>
 </html>

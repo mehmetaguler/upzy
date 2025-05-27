@@ -6,38 +6,19 @@ import requests
 from datetime import datetime
 from email.mime.text import MIMEText
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, request
 import threading
 import json
-from flask import redirect, request
+from flask import redirect
+
+# Flask uygulamasını oluştur
+app = Flask(__name__, static_folder="static", template_folder="templates")
 
 
-def write_log_entry(url, status, duration):
-    log_file = "upzy_logs.json"
-    try:
-        with open(log_file, "r") as f:
-            logs = json.load(f)
-    except:
-        logs = {"latest": [], "all": []}
-
-    now = datetime.now(istanbul).strftime("%Y-%m-%d %H:%M:%S")
-    new_entry = {
-        "url": url,
-        "status": status,
-        "time": f"{duration:.2f}",
-        "timestamp": now
-    }
-
-    # İlk URL kontrolünde latest listesini temizle
-    if url == urls[0]:
-        logs["latest"] = []
-
-    # Latest ve all listelerine ekle
-    logs["latest"].append(new_entry)
-    logs["all"].insert(0, new_entry)
-
-    with open(log_file, "w") as f:
-        json.dump(logs, f, indent=2)
+# Jinja2 Environment'ına fromjson filtresini ekle (artık kullanılmayacak ama kalsın)
+@app.template_filter('fromjson')
+def fromjson_filter(value):
+    return json.loads(value)
 
 
 # Saat dilimi
@@ -62,9 +43,6 @@ urls = [
 
 
 def run_schedule():
-    import schedule
-    import time
-
     schedule.every().day.at("08:00").do(check_urls)
     schedule.every().day.at("12:00").do(check_urls)
     schedule.every().day.at("18:00").do(check_urls)
@@ -100,6 +78,17 @@ def send_email(subject, html_body):
 
 # 🔁 Hata kontrolü
 def check_urls():
+    log_file = "upzy_logs.json"
+
+    try:
+        with open(log_file, "r", encoding='utf-8') as f:
+            logs_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        logs_data = {"latest": [], "all": []}
+
+    logs_data["latest"] = [
+    ]  # Her yeni kontrol başlamadan önce 'latest' listesini temizle
+
     for url in urls:
         try:
             start_time = datetime.now(istanbul)
@@ -107,15 +96,35 @@ def check_urls():
             duration = (datetime.now(istanbul) - start_time).total_seconds()
 
             print(
-                f"[{datetime.now(istanbul)}] {url} ✅ {response.status_code} - {duration:.2f}s"
+                f"[{datetime.now(istanbul).strftime('%Y-%m-%d %H:%M:%S')}] {url} ✅ {response.status_code} - {duration:.2f}s"
             )
-            write_log_entry(url, f"{response.status_code} UP", duration)
+
+            new_entry = {
+                "url": url,
+                "status": f"{response.status_code} UP",
+                "time": f"{duration:.2f}",
+                "timestamp":
+                datetime.now(istanbul).strftime("%Y-%m-%d %H:%M:%S")
+            }
+
+            logs_data["latest"].append(new_entry)
+            logs_data["all"].insert(0, new_entry)
 
         except Exception as e:
             now = datetime.now(istanbul)
-            msg = f"[{now}] {url} ❌ DOWN: {e}"
+            msg = f"[{now.strftime('%Y-%m-%d %H:%M:%S')}] {url} ❌ DOWN: {e}"
             print(msg)
-            write_log_entry(url, "DOWN", 0)
+
+            new_entry = {
+                "url": url,
+                "status": "DOWN",
+                "time": "N/A",  # Hata durumunda süre "N/A"
+                "timestamp":
+                datetime.now(istanbul).strftime("%Y-%m-%d %H:%M:%S")
+            }
+
+            logs_data["latest"].append(new_entry)
+            logs_data["all"].insert(0, new_entry)
 
             error_html = f"""
             <html>
@@ -142,6 +151,9 @@ def check_urls():
                 send_email("🚨 Upzy Uyarısı: Site Çöktü!", error_html)
             except Exception as e:
                 print(f"[WARN] Mail gönderilemedi: {e}")
+
+    with open(log_file, "w", encoding='utf-8') as f:
+        json.dump(logs_data, f, indent=2)
 
 
 # 📬 Günlük rapor (hata olmasa bile)
@@ -180,48 +192,81 @@ def daily_report():
     send_email("📊 Upzy Günlük Durum Raporu", html)
 
 
-app = Flask(__name__, static_folder="static", template_folder="templates")
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
 
 
-from flask import request  # üstte import edilmediyse bunu da ekle
-
-
-@app.route("/check-now")
-def check_now():
-    lang = request.args.get("lang", "tr")  # dil parametresini al
-    check_urls()
-    return redirect(f"/upzy?lang={lang}")
-
-
+# HTML sayfasını render eden route
 @app.route("/upzy")
 def upzy():
     view = request.args.get("view", "latest")
     lang = request.args.get("lang", "tr")
+    # Bu sayfaya logs verisi göndermeyeceğiz, JavaScript API'den alacak
+    return render_template("upzy.html", view=view, lang=lang)
 
+
+# Verileri döndüren yeni API uç noktası
+@app.route("/api/upzy_logs", methods=['GET'])
+def get_upzy_logs():
+    view = request.args.get("view", "latest")  # view parametresini buradan al
     try:
-        with open("upzy_logs.json", "r") as f:
+        with open("upzy_logs.json", "r", encoding='utf-8') as f:
             all_logs = json.load(f)
-    except:
+    except (FileNotFoundError, json.JSONDecodeError):
         all_logs = {"latest": [], "all": []}
 
     if view == "latest":
-        logs = all_logs.get("latest", [])
+        logs_to_return = all_logs.get("latest", [])
     elif view == "all":
-        logs = all_logs.get("all", [])
+        logs_to_return = all_logs.get("all", [])
     else:  # errors
-        logs = [
+        logs_to_return = [
             log for log in all_logs.get("all", []) if log["status"] == "DOWN"
         ]
+    return jsonify(logs_to_return)
 
-    return render_template("upzy.html", logs=logs, view=view, lang=lang)
+
+# Bu route, AJAX isteği ile tetiklenecek
+@app.route('/trigger_check', methods=['POST'])
+def trigger_check():
+    try:
+        # İstemciden gelen view parametresini al (şimdilik sadece tetikleme için kullanılıyor)
+        # check_urls() fonksiyonu tüm logları güncellediği için burada view'a özel bir işlem yapmıyoruz
+        requested_view = request.json.get('view', 'latest')
+
+        check_urls(
+        )  # URL kontrol fonksiyonunu çağır (bu fonksiyon upzy_logs.json dosyasını günceller)
+
+        # check_urls() bittikten sonra logları doğrudan get_upzy_logs API'sinden çekmesi daha doğru
+        # Bu kısım aslında artık gerekli değil, çünkü trigger_check sadece check_urls'ı çalıştırmalı
+        # ve front-end DataTables'ı yeniden yüklemeli. Ancak şimdilik response formatını koruyalım.
+        try:
+            with open("upzy_logs.json", "r", encoding='utf-8') as f:
+                updated_logs = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            updated_logs = {"latest": [], "all": []}
+
+        if requested_view == "latest":
+            logs_to_return = updated_logs.get('latest', [])
+        elif requested_view == "all":
+            logs_to_return = updated_logs.get('all', [])
+        else:  # errors
+            logs_to_return = [
+                log for log in updated_logs.get("all", [])
+                if log["status"] == "DOWN"
+            ]
+
+        return jsonify(
+            status='success',
+            message='URL kontrolü tamamlandı ve loglar güncellendi.',
+            data=logs_to_return  # Trigger sonrası güncel veriyi döndürüyoruz
+        )
+    except Exception as e:
+        print(f"Hata: {e}")  # Konsola hatayı yaz
+        return jsonify(status='error', message=str(e)), 500
 
 
 if __name__ == "__main__":
-
     threading.Thread(target=run_schedule).start()
     app.run(host="0.0.0.0", port=81)
